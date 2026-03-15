@@ -9,6 +9,7 @@ const appData = {
     users: [
         {name: "عمار علوان", pass: "123"}
     ],
+    savedTrips: [],
     savedTripsInfo: [],
     busFunds: {}
 };
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     generateBusFunds();
     setupCalculationsAndInteractions();
     setupSettingsSystem();
+    setupTripSystem();
     setupTripInfoSystem();
     setupSaveButtons();
 });
@@ -289,6 +291,77 @@ function setupSettingsSystem() {
     renderLists();
 }
 
+function setupTripSystem() {
+    const list = document.getElementById("saved-trips-list");
+    
+    window.renderTrips = () => {
+        if(!list) return;
+        list.innerHTML = appData.savedTrips.map((trip, i) => `
+            <li style="justify-content: space-between; flex-wrap: wrap;">
+                <span>${trip.name || '-'} | المندوب: ${trip.mandoub || '-'} | السائق: ${trip.driver || '-'}</span>
+                <div>
+                    <button onclick="editTrip(${i})" class="btn-primary" style="padding:5px 10px; color:white; border:none; border-radius:4px; cursor:pointer; margin-right:5px;">تعديل</button>
+                    <button onclick="deleteTrip(${i})" style="background:red; padding:5px 10px; color:white; border:none; border-radius:4px; cursor:pointer; margin-right:5px;">حذف</button>
+                </div>
+            </li>
+        `).join('');
+    };
+
+    const btnSaveTrip = document.getElementById("btn-save-trip");
+    if(btnSaveTrip) {
+        btnSaveTrip.addEventListener("click", () => {
+            const trip = {
+                name: document.getElementById("trip-name") ? document.getElementById("trip-name").value : "",
+                date: document.getElementById("trip-date") ? document.getElementById("trip-date").value : "",
+                days: document.getElementById("trip-days") ? document.getElementById("trip-days").value : "",
+                mandoub: document.getElementById("mandoub-select") ? document.getElementById("mandoub-select").value : "",
+                driver: document.getElementById("driver-select") ? document.getElementById("driver-select").value : "",
+                driver2: document.getElementById("driver2-select") ? document.getElementById("driver2-select").value : "",
+                bus: document.getElementById("bus-select") ? document.getElementById("bus-select").value : "",
+                busCount: document.getElementById("bus-count") ? document.getElementById("bus-count").value : "",
+                notes: document.getElementById("trip-notes") ? document.getElementById("trip-notes").value : ""
+            };
+            
+            if (window.editTripIndex !== undefined && window.editTripIndex !== null) {
+                appData.savedTrips[window.editTripIndex] = trip;
+                window.editTripIndex = null;
+                btnSaveTrip.textContent = "حفظ وإنشاء الرحلة";
+            } else {
+                appData.savedTrips.push(trip);
+            }
+            
+            const form = document.getElementById("trip-form");
+            if(form) form.reset();
+            renderTrips();
+            alert("تم حفظ الرحلة بنجاح");
+        });
+    }
+
+    window.deleteTrip = (i) => {
+        appData.savedTrips.splice(i, 1);
+        renderTrips();
+    };
+
+    window.editTrip = (i) => {
+        const trip = appData.savedTrips[i];
+        if(document.getElementById("trip-name")) document.getElementById("trip-name").value = trip.name;
+        if(document.getElementById("trip-date")) document.getElementById("trip-date").value = trip.date;
+        if(document.getElementById("trip-days")) document.getElementById("trip-days").value = trip.days;
+        if(document.getElementById("mandoub-select")) document.getElementById("mandoub-select").value = trip.mandoub;
+        if(document.getElementById("driver-select")) document.getElementById("driver-select").value = trip.driver;
+        if(document.getElementById("driver2-select")) document.getElementById("driver2-select").value = trip.driver2;
+        if(document.getElementById("bus-select")) document.getElementById("bus-select").value = trip.bus;
+        if(document.getElementById("bus-count")) document.getElementById("bus-count").value = trip.busCount;
+        if(document.getElementById("trip-notes")) document.getElementById("trip-notes").value = trip.notes;
+        
+        window.editTripIndex = i;
+        const btnSaveTrip = document.getElementById("btn-save-trip");
+        if(btnSaveTrip) btnSaveTrip.textContent = "تحديث الرحلة";
+    };
+    
+    renderTrips();
+}
+
 // 7. نظام معلومات الرحلة الشاملة
 function setupTripInfoSystem() {
     const list = document.getElementById("saved-trip-infos-list");
@@ -323,7 +396,6 @@ function setupTripInfoSystem() {
 
 // 8. أزرار الحفظ العامة وإضافة رصيد الباص
 function setupSaveButtons() {
-    document.getElementById("btn-save-trip").addEventListener("click", () => alert("تم حفظ الرحلة بنجاح"));
     document.getElementById("btn-save-user-expense").addEventListener("click", () => alert("تم تسجيل المصروف بنجاح"));
     document.getElementById("btn-save-user-income").addEventListener("click", () => alert("تم تسجيل الإيراد بنجاح"));
     document.getElementById("btn-save-user-bus-exp").addEventListener("click", () => alert("تم حفظ مصاريف الباص بنجاح"));
