@@ -241,7 +241,10 @@
                         </div>
                         <div class="form-group">
                             <label>الانطلاقية</label>
-                            <input type="text" id="ti-16">
+                            <div class="input-with-currency">
+                                <input type="text" id="ti-16">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>الوجهة</label>
@@ -335,22 +338,6 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>خصم المندوب</label>
-                            <div class="input-with-currency">
-                                <input type="number" id="ti-new3">
-                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>خصم السائق</label>
-                            <div class="input-with-currency">
-                                <input type="number" id="ti-new4">
-                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
                             <label>ربح الرحلة</label>
                             <div class="input-with-currency">
                                 <input type="number" readonly class="bg-light">
@@ -411,6 +398,15 @@
                         <div class="form-group"><label>المبلغ الواصل</label><input type="number" id="driver-paid"></div>
                         <div class="form-group"><label>المبلغ المتبقي</label><input type="number" id="driver-rem" readonly></div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>خصم السائق</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-new4">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label>تقييم السائق للرحلة</label>
                         <select><option>ممتاز</option><option>جيد جداً</option><option>جيد</option><option>مقبول</option><option>ضعيف</option></select>
@@ -434,6 +430,13 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group"><label>حوافز وإكراميات</label><input type="number"></div>
+                        <div class="form-group">
+                            <label>خصم المندوب</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-new3">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label>تقييم المندوب</label>
                             <select id="mandoub-eval-select"><option>ممتاز</option><option>جيد جداً</option><option>جيد</option><option>مقبول</option><option>ضعيف</option></select>
