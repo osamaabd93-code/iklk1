@@ -114,8 +114,8 @@ function setupNavigation() {
 // 3. تعبئة القوائم المنسدلة
 function populateSelects() {
     const elements = {
-        driverSelect: document.getElementById("driver-select"),
-        mandoubSelect: document.getElementById("mandoub-select"),
+        driverList: document.getElementById("driver-list"),
+        mandoubList: document.getElementById("mandoub-list"),
         busSelect: document.getElementById("bus-select"),
         financeBusType: document.getElementById("finance-bus-type"),
         userExpType: document.getElementById("user-expense-type-select"),
@@ -125,8 +125,8 @@ function populateSelects() {
         userBusOpts: document.getElementById("user-bus-opts-select")
     };
 
-    if(elements.driverSelect) elements.driverSelect.innerHTML = appData.drivers.map(n => `<option>${n}</option>`).join('');
-    if(elements.mandoubSelect) elements.mandoubSelect.innerHTML = appData.mandoubs.map(n => `<option>${n}</option>`).join('');
+    if(elements.driverList) elements.driverList.innerHTML = appData.drivers.map(n => `<option value="${n}">`).join('');
+    if(elements.mandoubList) elements.mandoubList.innerHTML = appData.mandoubs.map(n => `<option value="${n}">`).join('');
     if(elements.busSelect) elements.busSelect.innerHTML = appData.buses.map(n => `<option>${n}</option>`).join('');
     if(elements.financeBusType) elements.financeBusType.innerHTML = appData.buses.map(n => `<option value="${n}">${n}</option>`).join('');
     if(elements.userCarType) elements.userCarType.innerHTML = appData.buses.map(n => `<option>${n}</option>`).join('');
