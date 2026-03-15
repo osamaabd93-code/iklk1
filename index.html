@@ -63,18 +63,26 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>اسم المندوب</label>
-                            <select id="mandoub-select"></select>
+                            <input type="text" id="mandoub-select" list="mandoub-list" placeholder="اختر أو اكتب اسم المندوب">
+                            <datalist id="mandoub-list"></datalist>
                         </div>
                         <div class="form-group">
                             <label>اسم السائق</label>
-                            <select id="driver-select"></select>
+                            <input type="text" id="driver-select" list="driver-list" placeholder="اختر أو اكتب اسم السائق">
+                            <datalist id="driver-list"></datalist>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
+                            <label>اسم السائق الثاني</label>
+                            <input type="text" id="driver2-select" list="driver-list" placeholder="اختر أو اكتب اسم السائق الثاني">
+                        </div>
+                        <div class="form-group">
                             <label>الباص المستخدم</label>
                             <select id="bus-select"></select>
                         </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group">
                             <label>عدد باصات الرحلة</label>
                             <input type="number" value="1">
@@ -105,71 +113,120 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>سعر شراء البرنامج الكلي</label>
-                            <input type="number" id="ti-1">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-1">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>اجرة نقل الفرد</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-new1">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>السعر الكلي لغرف مكه</label>
-                            <input type="number" id="ti-2">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-2">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>السعر الكلي لغرف المدينة</label>
-                            <input type="number" id="ti-3">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-3">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>سعر العدد الكلي للتأشيرات</label>
-                            <input type="number" id="ti-4">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-4">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>سعر التأشيرة الواحدة</label>
-                            <input type="number" id="ti-5">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-5">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>مبلغ الهيئة الكلي</label>
-                            <input type="number" id="ti-6">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-6">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>تسديد المبلغ في بغداد (العدد)</label>
-                            <input type="number" id="ti-7">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-7">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>تسديد المبلغ في بغداد (المبلغ)</label>
-                            <input type="number" id="ti-8">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-8">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>تسديد في الحدود (الاطفال)</label>
-                            <input type="number" id="ti-9">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-9">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>تسديد في الحدود (المبلغ)</label>
-                            <input type="number" id="ti-10">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-10">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>سعر الهدايا</label>
-                            <input type="number" id="ti-11">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-11">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>عدد المعتمرين الكلي</label>
-                            <input type="number" id="ti-12">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-12">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>عدد التأشيرات الكلية</label>
-                            <input type="number" id="ti-13">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-13">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>عدد التأشيرات المجانية</label>
-                            <input type="number" id="ti-14">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-14">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -189,57 +246,118 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>غرف مكة (العدد)</label>
-                            <input type="number" id="ti-18">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-18">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>سعر الغرفة (مكة)</label>
-                            <input type="number" id="ti-19">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-19">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>غرف المدينة (العدد)</label>
-                            <input type="number" id="ti-20">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-20">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>سعر الغرفة (المدينة)</label>
-                            <input type="number" id="ti-21">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-21">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>عدد الاقساط</label>
-                            <input type="number" id="ti-22">
+                            <label>المبلغ الكلي للاقساط</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-22">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>مبلغ القسط للشخص الواحد</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-new2">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>عدد الاقساط الكلية</label>
-                            <input type="number" id="ti-23">
-                        </div>
-                        <div class="form-group">
-                            <label>سعر الرحلة</label>
-                            <input type="number" id="ti-24">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-23">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>أجرة الباص</label>
-                            <input type="number" id="ti-25">
+                            <label>سعر الرحلة</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-24">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>أجرة الباص الكلية</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-25">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>المبلغ الكلي الوارد</label>
-                            <input type="number" id="ti-26">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-26">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>المبلغ الكلي الصادر</label>
-                            <input type="number" id="ti-27">
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-27">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>خصم المندوب</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-new3">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>خصم السائق</label>
+                            <div class="input-with-currency">
+                                <input type="number" id="ti-new4">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>ربح الرحلة</label>
-                            <input type="number" readonly class="bg-light">
+                            <div class="input-with-currency">
+                                <input type="number" readonly class="bg-light">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>صافي ربح الرحلة</label>
-                            <input type="number" readonly class="bg-light">
+                            <div class="input-with-currency">
+                                <input type="number" readonly class="bg-light">
+                                <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            </div>
                         </div>
                     </div>
                     <button type="button" id="btn-save-trip-info" class="btn btn-primary w-100">حفظ المعلومات</button>
@@ -469,7 +587,9 @@
                     <p><strong>سبب التقييم:</strong> <span id="display-eval-reason">لا يوجد</span></p>
                     <hr>
                     <p><strong>مبلغ الدين السابق:</strong> 0 دولار</p>
-                    <p><strong>مبلغ السلفة:</strong> 500 دولار</p>
+                    <p><strong>سلفة (دينار):</strong> 0</p>
+                    <p><strong>سلفة (دولار):</strong> 500</p>
+                    <p><strong>سلفة (ريال):</strong> 0</p>
                     <p><strong>سلفة اضافية عاجلة:</strong> 0 دولار</p>
                     <p><strong>الأجرة الكلية:</strong> 300 دولار</p>
                     <p><strong>الواصل:</strong> 100 دولار | <strong>المتبقي:</strong> 200 دولار</p>
@@ -547,6 +667,10 @@
             <section id="user-bus-expenses" class="tab-content">
                 <h2>مصاريف الباصات</h2>
                 <form class="data-form">
+                    <div class="form-group">
+                        <label>العملة</label>
+                        <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                    </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>المبلغ</label>
