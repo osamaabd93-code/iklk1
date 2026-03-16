@@ -91,6 +91,7 @@
                     <div class="form-group">
                         <label>عقد اتفاق بين الطرفين (إرفاق صورة)</label>
                         <input type="file" accept="image/*" id="trip-file">
+                        <input type="hidden" id="trip-file-base64">
                     </div>
                     <div class="form-group">
                         <label>ملاحظات (اختياري)</label>
@@ -363,10 +364,10 @@
 
             <section id="admin-finance" class="tab-content">
                 <h2>المالية والعهد</h2>
-                <form class="data-form">
+                <form class="data-form" id="finance-form">
                     <div class="form-group">
                         <label>العملة</label>
-                        <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                        <select id="finance-currency"><option>دينار</option><option>دولار</option><option>ريال</option></select>
                     </div>
 
                     <h3 class="section-title">صندوق الباص</h3>
@@ -383,13 +384,14 @@
                     
                     <h3 class="section-title">بيانات السائق</h3>
                     <div class="form-row">
-                        <div class="form-group"><label>مبلغ الدين السابق للسائق</label><input type="number"></div>
-                        <div class="form-group"><label>سلفة اضافية عاجله للسائق</label><input type="number"></div>
+                        <div class="form-group"><label>اسم السائق</label><select id="finance-driver-name"></select></div>
+                        <div class="form-group"><label>مبلغ الدين السابق للسائق</label><input type="number" id="finance-driver-debt"></div>
+                        <div class="form-group"><label>سلفة اضافية عاجله للسائق</label><input type="number" id="finance-driver-advance"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group"><label>سلفة السائق (دينار)</label><input type="number"></div>
-                        <div class="form-group"><label>سلفة السائق (دولار)</label><input type="number"></div>
-                        <div class="form-group"><label>سلفة السائق (ريال)</label><input type="number"></div>
+                        <div class="form-group"><label>سلفة السائق (دينار)</label><input type="number" id="finance-driver-loan-iqd"></div>
+                        <div class="form-group"><label>سلفة السائق (دولار)</label><input type="number" id="finance-driver-loan-usd"></div>
+                        <div class="form-group"><label>سلفة السائق (ريال)</label><input type="number" id="finance-driver-loan-sar"></div>
                     </div>
                     <div class="form-row">
                         <div class="form-group"><label>الأجرة الكلية</label><input type="number" id="driver-total"></div>
@@ -409,17 +411,18 @@
                     </div>
                     <div class="form-group">
                         <label>تقييم السائق للرحلة</label>
-                        <select><option>ممتاز</option><option>جيد جداً</option><option>جيد</option><option>مقبول</option><option>ضعيف</option></select>
+                        <select id="finance-driver-eval"><option>ممتاز</option><option>جيد جداً</option><option>جيد</option><option>مقبول</option><option>ضعيف</option></select>
                     </div>
 
                     <h3 class="section-title">بيانات المندوب</h3>
                     <div class="form-row">
-                        <div class="form-group"><label>سلفة اضافية عاجله للمندوب</label><input type="number"></div>
+                        <div class="form-group"><label>اسم المندوب</label><select id="finance-mandoub-name"></select></div>
+                        <div class="form-group"><label>سلفة اضافية عاجله للمندوب</label><input type="number" id="finance-mandoub-advance"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group"><label>سلفة المندوب (دينار)</label><input type="number"></div>
-                        <div class="form-group"><label>سلفة المندوب (دولار)</label><input type="number"></div>
-                        <div class="form-group"><label>سلفة المندوب (ريال)</label><input type="number"></div>
+                        <div class="form-group"><label>سلفة المندوب (دينار)</label><input type="number" id="finance-mandoub-loan-iqd"></div>
+                        <div class="form-group"><label>سلفة المندوب (دولار)</label><input type="number" id="finance-mandoub-loan-usd"></div>
+                        <div class="form-group"><label>سلفة المندوب (ريال)</label><input type="number" id="finance-mandoub-loan-sar"></div>
                     </div>
                     <div class="form-row">
                         <div class="form-group"><label>الأجرة الكلية</label><input type="number" id="man-total"></div>
@@ -429,7 +432,7 @@
                         <div class="form-group"><label>المبلغ المتبقي</label><input type="number" id="man-rem" readonly></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group"><label>حوافز وإكراميات</label><input type="number"></div>
+                        <div class="form-group"><label>حوافز وإكراميات</label><input type="number" id="finance-mandoub-bonus"></div>
                         <div class="form-group">
                             <label>خصم المندوب</label>
                             <div class="input-with-currency">
@@ -463,21 +466,21 @@
                         <i class="fas fa-bus-alt"></i>
                         <h4>صندوق النقل العام</h4>
                         <div class="fund-details">
-                            <span>وارد: 0</span> | <span>صادر: 0</span> | <span>تحويل: 0</span>
+                            <span>وارد: <span id="public-trans-in">0</span></span> | <span>صادر: <span id="public-trans-out">0</span></span> | <span>تحويل: 0</span>
                         </div>
                     </div>
                     <div class="stat-card special-fund">
                         <i class="fas fa-kaaba"></i>
                         <h4>صندوق العمرة</h4>
                         <div class="fund-details">
-                            <span>وارد: 0</span> | <span>صادر: 0</span> | <span>تحويل: 0</span>
+                            <span>وارد: <span id="umrah-trans-in">0</span></span> | <span>صادر: <span id="umrah-trans-out">0</span></span> | <span>تحويل: 0</span>
                         </div>
                     </div>
                     <div class="stat-card special-fund">
                         <i class="fas fa-chart-line"></i>
                         <h4>صندوق الأرباح</h4>
                         <div class="fund-details">
-                            <span>وارد: 0</span> | <span>صادر: 0</span> | <span>تحويل: 0</span>
+                            <span>وارد: <span id="profit-in">0</span></span> | <span>صادر: <span id="profit-out">0</span></span> | <span>تحويل: 0</span>
                         </div>
                     </div>
                 </div>
@@ -510,7 +513,7 @@
                     <div style="overflow-x: auto;">
                         <table id="report-table" style="width: 100%; border-collapse: collapse; text-align: right; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                             <thead>
-                                <tr style="background: var(--primary-admin); color: white;">
+                                <tr id="report-table-head" style="background: var(--primary-admin); color: white;">
                                     <th style="padding: 12px; border: 1px solid #ddd;">المعلومات</th>
                                     <th style="padding: 12px; border: 1px solid #ddd;">التفاصيل</th>
                                 </tr>
@@ -541,6 +544,17 @@
                     <ul class="reports-list" id="users-list" style="margin-top: 15px;"></ul>
                 </form>
 
+                <h3 class="section-title">إعدادات أسماء المندوبين</h3>
+                <form class="data-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="new-mandoub-name-input" placeholder="اكتب اسم مندوب جديد">
+                        </div>
+                        <button type="button" id="btn-add-mandoub" class="btn btn-primary">إضافة</button>
+                    </div>
+                    <ul class="reports-list" id="mandoubs-settings-list" style="margin-top: 15px;"></ul>
+                </form>
+
                 <h3 class="section-title">إعدادات أسماء السائقين</h3>
                 <form class="data-form">
                     <div class="form-row">
@@ -550,6 +564,17 @@
                         <button type="button" id="btn-add-driver" class="btn btn-primary">إضافة</button>
                     </div>
                     <ul class="reports-list" id="drivers-settings-list" style="margin-top: 15px;"></ul>
+                </form>
+
+                <h3 class="section-title">إعدادات الباصات</h3>
+                <form class="data-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="new-bus-input" placeholder="اكتب اسم باص جديد">
+                        </div>
+                        <button type="button" id="btn-add-bus" class="btn btn-primary">إضافة</button>
+                    </div>
+                    <ul class="reports-list" id="bus-settings-list" style="margin-top: 15px;"></ul>
                 </form>
 
                 <h3 class="section-title">إعدادات أنواع المصاريف</h3>
@@ -615,42 +640,28 @@
                 <h2>معلومات وإحصائيات الرحلات</h2>
                 <div class="info-card">
                     <h3>الإحصائيات الشخصية</h3>
-                    <p><strong>الرحلات المعلقة حالياً:</strong> 1 رحلة</p>
-                    <p><strong>عدد السفرات الكلي:</strong> 12 سفرة</p>
-                    <p><strong>إجمالي الرحلات مع أيام البقاء:</strong> 150 يوم</p>
+                    <p><strong>الرحلات المعلقة حالياً:</strong> <span id="user-stat-pending">0</span> رحلة</p>
+                    <p><strong>عدد السفرات الكلي:</strong> <span id="user-stat-total">0</span> سفرة</p>
+                    <p><strong>إجمالي الرحلات مع أيام البقاء:</strong> <span id="user-stat-days">0</span> يوم</p>
                 </div>
 
                 <h2>معلومات الرحلة الحالية</h2>
-                <div class="info-card">
-                    <h3>رحلة عمرة رجب</h3>
-                    <p><strong>التاريخ:</strong> 2024-05-20 | <strong>عدد الأيام:</strong> 10</p>
-                    <p><strong>حالة الرحلة:</strong> <span id="trip-status" style="font-weight: bold; color: red;">معلقة</span></p>
-                    <hr>
-                    <p><strong>نقاط إيجابية:</strong> 0 | <strong>نقاط سلبية:</strong> 0</p>
-                    <p><strong>التقييم:</strong> لم يتم التقييم</p>
-                    <p><strong>سبب التقييم:</strong> <span id="display-eval-reason">لا يوجد</span></p>
-                    <hr>
-                    <p><strong>مبلغ الدين السابق:</strong> 0 دولار</p>
-                    <p><strong>سلفة (دينار):</strong> 0</p>
-                    <p><strong>سلفة (دولار):</strong> 500</p>
-                    <p><strong>سلفة (ريال):</strong> 0</p>
-                    <p><strong>سلفة اضافية عاجلة:</strong> 0 دولار</p>
-                    <p><strong>الأجرة الكلية:</strong> 300 دولار</p>
-                    <p><strong>الواصل:</strong> 100 دولار | <strong>المتبقي:</strong> 200 دولار</p>
+                <div class="info-card" id="user-current-trip-info">
+                    <p>لا توجد رحلة حالية معلقة.</p>
                 </div>
             </section>
 
             <section id="user-expenses" class="tab-content">
                 <h2>تسجيل المصاريف</h2>
-                <form class="data-form">
+                <form class="data-form" id="user-expense-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label>العملة</label>
-                            <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                            <select id="user-expense-currency"><option>دينار</option><option>دولار</option><option>ريال</option></select>
                         </div>
                         <div class="form-group">
                             <label>المبلغ</label>
-                            <input type="number" placeholder="أدخل المبلغ">
+                            <input type="number" id="user-expense-amount" placeholder="أدخل المبلغ">
                         </div>
                     </div>
                     
@@ -664,7 +675,7 @@
                     <div class="form-row">
                         <div class="form-group" id="liters-count-group">
                             <label>عدد اللترات</label>
-                            <input type="number" placeholder="أدخل عدد اللترات">
+                            <input type="number" id="user-expense-liters" placeholder="أدخل عدد اللترات">
                         </div>
                         <div class="form-group">
                             <label>نوع السيارة</label>
@@ -674,11 +685,12 @@
 
                     <div class="form-group">
                         <label>ملاحظة / تفاصيل</label>
-                        <input type="text" placeholder="تفاصيل إضافية">
+                        <input type="text" id="user-expense-notes" placeholder="تفاصيل إضافية">
                     </div>
                     <div class="form-group">
                         <label>إرفاق صورة الوصل</label>
-                        <input type="file" accept="image/*">
+                        <input type="file" accept="image/*" id="user-expense-file">
+                        <input type="hidden" id="user-expense-file-base64">
                     </div>
                     <button type="button" id="btn-save-user-expense" class="btn btn-primary w-100" style="background-color: #059669;">تسجيل المصروف</button>
                 </form>
@@ -686,14 +698,14 @@
 
             <section id="user-income" class="tab-content">
                 <h2>تسجيل الإيرادات</h2>
-                <form class="data-form">
+                <form class="data-form" id="user-income-form">
                     <div class="form-group">
                         <label>العملة</label>
-                        <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                        <select id="user-income-currency"><option>دينار</option><option>دولار</option><option>ريال</option></select>
                     </div>
                     <div class="form-group">
                         <label>نوع الإيراد</label>
-                        <select>
+                        <select id="user-income-type">
                             <option>عمرة إنابة</option>
                             <option>نقل بريد</option>
                             <option>نقل معتمر</option>
@@ -702,7 +714,7 @@
                     </div>
                     <div class="form-group">
                         <label>المبلغ المستلم</label>
-                        <input type="number">
+                        <input type="number" id="user-income-amount">
                     </div>
                     <button type="button" id="btn-save-user-income" class="btn btn-primary w-100" style="background-color: #059669;">تسجيل الإيراد</button>
                 </form>
@@ -710,24 +722,25 @@
 
             <section id="user-bus-expenses" class="tab-content">
                 <h2>مصاريف الباصات</h2>
-                <form class="data-form">
+                <form class="data-form" id="user-bus-expense-form">
                     <div class="form-group">
                         <label>العملة</label>
-                        <select><option>دينار</option><option>دولار</option><option>ريال</option></select>
+                        <select id="user-bus-exp-currency"><option>دينار</option><option>دولار</option><option>ريال</option></select>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>المبلغ</label>
-                            <input type="number">
+                            <input type="number" id="user-bus-exp-amount">
                         </div>
                         <div class="form-group">
                             <label>التاريخ</label>
-                            <input type="date">
+                            <input type="date" id="user-bus-exp-date">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>رفع صورة</label>
-                        <input type="file" accept="image/*">
+                        <input type="file" accept="image/*" id="user-bus-exp-file">
+                        <input type="hidden" id="user-bus-exp-file-base64">
                     </div>
                     <div class="form-group">
                         <label>خيارات (اختياري)</label>
@@ -765,6 +778,13 @@
         </nav>
     </div>
 
-    <script src="script.js"></script>
+    <div id="image-modal" class="modal hidden">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img">
+    </div>
+
+    <div id="custom-alert-container" class="custom-alert-container"></div>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
