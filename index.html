@@ -485,16 +485,41 @@
 
             <section id="admin-reports" class="tab-content">
                 <h2>التقارير الشاملة</h2>
-                <ul class="reports-list">
-                    <li><i class="fas fa-file-alt"></i> تقرير مصرف الرحلة</li>
-                    <li><i class="fas fa-file-alt"></i> تقرير رحلات الباص الواحد</li>
-                    <li><i class="fas fa-file-alt"></i> تقرير أعطال الصيانة</li>
-                    <li><i class="fas fa-file-invoice-dollar"></i> تقرير الوارد الكلي للسائق</li>
-                    <li><i class="fas fa-file-invoice-dollar"></i> تقرير الوارد الكلي للمندوب</li>
-                    <li><i class="fas fa-route"></i> تقرير عدد السفرات الكلي</li>
-                    <li><i class="fas fa-calendar-check"></i> تقرير عدد الرحلات للسائق مع مدة الأيام</li>
-                    <li><i class="fas fa-calendar-check"></i> تقرير عدد الرحلات للمندوب مع مدة الأيام</li>
+                
+                <ul class="reports-list" id="reports-main-list">
+                    <li onclick="showReport('تقرير مصرف الرحلة')" style="cursor: pointer;"><i class="fas fa-file-alt"></i> تقرير مصرف الرحلة</li>
+                    <li onclick="showReport('تقرير رحلات الباص الواحد')" style="cursor: pointer;"><i class="fas fa-file-alt"></i> تقرير رحلات الباص الواحد</li>
+                    <li onclick="showReport('تقرير أعطال الصيانة')" style="cursor: pointer;"><i class="fas fa-file-alt"></i> تقرير أعطال الصيانة</li>
+                    <li onclick="showReport('تقرير الوارد الكلي للسائق')" style="cursor: pointer;"><i class="fas fa-file-invoice-dollar"></i> تقرير الوارد الكلي للسائق</li>
+                    <li onclick="showReport('تقرير الوارد الكلي للمندوب')" style="cursor: pointer;"><i class="fas fa-file-invoice-dollar"></i> تقرير الوارد الكلي للمندوب</li>
+                    <li onclick="showReport('تقرير عدد السفرات الكلي')" style="cursor: pointer;"><i class="fas fa-route"></i> تقرير عدد السفرات الكلي</li>
+                    <li onclick="showReport('تقرير عدد الرحلات للسائق مع مدة الأيام')" style="cursor: pointer;"><i class="fas fa-calendar-check"></i> تقرير عدد الرحلات للسائق مع مدة الأيام</li>
+                    <li onclick="showReport('تقرير عدد الرحلات للمندوب مع مدة الأيام')" style="cursor: pointer;"><i class="fas fa-calendar-check"></i> تقرير عدد الرحلات للمندوب مع مدة الأيام</li>
                 </ul>
+
+                <div id="report-viewer" class="hidden" style="margin-top: 20px;">
+                    <button onclick="hideReport()" class="btn btn-secondary" style="margin-bottom: 15px;">رجوع للقائمة</button>
+                    <h3 id="report-title" class="section-title"></h3>
+                    <div class="form-row" style="margin-bottom: 15px;">
+                        <div class="form-group" style="flex: 2;">
+                            <input type="text" id="report-search-input" placeholder="بحث...">
+                        </div>
+                        <button type="button" onclick="searchReport()" class="btn btn-primary" style="flex: 1;">بحث</button>
+                        <button type="button" onclick="exportReportExcel()" class="btn btn-secondary" style="flex: 1; background-color: #10b981;">تصدير ملف اكسل</button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table id="report-table" style="width: 100%; border-collapse: collapse; text-align: right; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <thead>
+                                <tr style="background: var(--primary-admin); color: white;">
+                                    <th style="padding: 12px; border: 1px solid #ddd;">المعلومات</th>
+                                    <th style="padding: 12px; border: 1px solid #ddd;">التفاصيل</th>
+                                </tr>
+                            </thead>
+                            <tbody id="report-table-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <section id="admin-settings" class="tab-content">
@@ -514,6 +539,17 @@
                     </div>
                     <button type="button" id="btn-save-new-user" class="btn btn-primary w-100">حفظ المستخدم</button>
                     <ul class="reports-list" id="users-list" style="margin-top: 15px;"></ul>
+                </form>
+
+                <h3 class="section-title">إعدادات أسماء السائقين</h3>
+                <form class="data-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="new-driver-name-input" placeholder="اكتب اسم سائق جديد">
+                        </div>
+                        <button type="button" id="btn-add-driver" class="btn btn-primary">إضافة</button>
+                    </div>
+                    <ul class="reports-list" id="drivers-settings-list" style="margin-top: 15px;"></ul>
                 </form>
 
                 <h3 class="section-title">إعدادات أنواع المصاريف</h3>
