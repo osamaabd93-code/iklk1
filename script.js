@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupTripSystem();
     setupTripInfoSystem();
     setupSaveButtons();
+    setupReportsSystem();
 });
 
 // 1. نظام تسجيل الدخول والخروج
@@ -209,12 +210,13 @@ function setupCalculationsAndInteractions() {
     if(manPaid) manPaid.addEventListener("input", calcMan);
 }
 
-// 6. نظام الإعدادات (أنواع المصاريف، خيارات الباص، اليوزرات)
+// 6. نظام الإعدادات (أنواع المصاريف، خيارات الباص، اليوزرات، السائقين)
 function setupSettingsSystem() {
     const renderLists = () => {
         const expList = document.getElementById("exp-types-list");
         const busOptsList = document.getElementById("bus-opts-list");
         const usersList = document.getElementById("users-list");
+        const driversList = document.getElementById("drivers-settings-list");
         
         if(expList) {
             expList.innerHTML = appData.expenseTypes.map((t, i) => `
@@ -245,6 +247,17 @@ function setupSettingsSystem() {
                     </div>
                 </li>`).join('');
         }
+
+        if(driversList) {
+            driversList.innerHTML = appData.drivers.map((d, i) => `
+                <li style="justify-content: space-between;">${d}
+                    <div>
+                        <button onclick="editDriver(${i})" class="btn-primary" style="padding:2px 8px; font-size:12px; border:none; border-radius:4px; color:white; cursor:pointer;">تعديل</button>
+                        <button onclick="delDriver(${i})" style="background:red; padding:2px 8px; font-size:12px; border:none; border-radius:4px; color:white; cursor:pointer;">حذف</button>
+                    </div>
+                </li>`).join('');
+        }
+        
         renderDynamicSelects();
     };
 
@@ -271,6 +284,19 @@ function setupSettingsSystem() {
         }
     });
 
+    const btnAddDriver = document.getElementById("btn-add-driver");
+    if(btnAddDriver){
+        btnAddDriver.addEventListener("click", () => {
+            const val = document.getElementById("new-driver-name-input").value;
+            if(val) { 
+                appData.drivers.push(val); 
+                document.getElementById("new-driver-name-input").value = ""; 
+                renderLists(); 
+                populateSelects(); 
+            }
+        });
+    }
+
     window.delExp = (i) => { appData.expenseTypes.splice(i, 1); renderLists(); };
     window.editExp = (i) => { const n = prompt("تعديل", appData.expenseTypes[i]); if(n) { appData.expenseTypes[i] = n; renderLists(); } };
     window.delBusOpt = (i) => { appData.busExpenseOptions.splice(i, 1); renderLists(); };
@@ -287,6 +313,9 @@ function setupSettingsSystem() {
             populateUserSelectsForLogin(); 
         } 
     };
+
+    window.delDriver = (i) => { appData.drivers.splice(i, 1); renderLists(); populateSelects(); };
+    window.editDriver = (i) => { const n = prompt("تعديل اسم السائق", appData.drivers[i]); if(n) { appData.drivers[i] = n; renderLists(); populateSelects(); } };
 
     renderLists();
 }
@@ -415,4 +444,62 @@ function setupSaveButtons() {
 
         alert("تم حفظ المالية بنجاح");
     });
+}
+
+// 9. نظام التقارير
+function setupReportsSystem() {
+    window.showReport = (title) => {
+        document.getElementById('reports-main-list').classList.add('hidden');
+        const viewer = document.getElementById('report-viewer');
+        if (viewer) {
+            viewer.classList.remove('hidden');
+            document.getElementById('report-title').textContent = title;
+            
+            const tbody = document.getElementById('report-table-body');
+            tbody.innerHTML = `
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;">معلومة تجريبية لـ ${title}</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">التفاصيل 1</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ddd;">قيمة أخرى</td>
+                    <td style="padding: 12px; border: 1px solid #ddd;">التفاصيل 2</td>
+                </tr>
+            `;
+        }
+    };
+
+    window.hideReport = () => {
+        document.getElementById('reports-main-list').classList.remove('hidden');
+        document.getElementById('report-viewer').classList.add('hidden');
+    };
+
+    window.searchReport = () => {
+        const query = document.getElementById('report-search-input').value.toLowerCase();
+        const rows = document.querySelectorAll('#report-table-body tr');
+        rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(query) ? '' : 'none';
+        });
+    };
+
+    window.exportReportExcel = () => {
+        let table = document.getElementById("report-table");
+        let rows = table.querySelectorAll("tr");
+        let csv = [];
+        for (let i = 0; i < rows.length; i++) {
+            let row = [], cols = rows[i].querySelectorAll("td, th");
+            for (let j = 0; j < cols.length; j++) 
+                row.push(cols[j].innerText);
+            csv.push(row.join(","));
+        }
+        let csvContent = "data:text/csv;charset=utf-8,\uFEFF" + csv.join("\n");
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", document.getElementById('report-title').textContent + ".csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 }
